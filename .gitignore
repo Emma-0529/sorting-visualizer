@@ -1,0 +1,23 @@
+# Build directories created by CMake
+build/
+bin/
+out/
+.cmake/
+
+# Compiled object files and binaries
+*.exe
+*.out
+*.app
+*.obj
+*.o
+*.lib
+*.a
+
+# IDE specific settings and caches
+.vscode/
+.idea/
+*.suo
+*.vcxproj
+*.sln
+.DS_Store
+Thumbs.db
