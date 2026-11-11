@@ -1,6 +1,6 @@
 # sorting-visualizer
 
-Steps to Run:
+Steps to Set-up and Run:
 
 1. Ensure CMake is downloaded and a C++ compiler
 2. Create own feature branch from staging
@@ -25,6 +25,8 @@ Note - Whenever you add new .cpp file, must add it to CMakeLists.txt under src/m
    - Windows:\
      .\Debug\sorting_visualizer.exe
 
-Note - To test changes to files in visualization window must rebuild by
+Note - To test changes to .cpp files in visualization window must rebuild by
    * cmake --build .
 and re-launch the window
+
+Note - To simply test logic without the visualization window do not use cmake commands, use standard compiler (g++) commands manually.
