@@ -14,7 +14,7 @@ Steps to Set-up and Run:
    - Windows:\
      .\Debug\sorting_visualizer.exe
 
-
+\
 Note - Whenever you add new .cpp file, must add it to CMakeLists.txt under src/main.cpp and delete old build folder:
    * rm -rf build
    * mkdir build
@@ -26,10 +26,10 @@ Note - Whenever you add new .cpp file, must add it to CMakeLists.txt under src/m
    - Windows:\
      .\Debug\sorting_visualizer.exe
 
-
+\
 Note - To test changes to .cpp files in visualization window must rebuild by
    * cmake --build .
 and re-launch the window
 
-
+\
 Note - To simply test logic without the visualization window do not use cmake commands, use standard compiler (g++) commands manually.
