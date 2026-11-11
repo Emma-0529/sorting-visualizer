@@ -9,9 +9,9 @@ Steps to Run:
    * cd build
    * cmake ..
    * cmake --build .
-   - MacOS:
+   - MacOS:\
      ./sorting_visualizer
-   - Windows:
+   - Windows:\
      .\Debug\sorting_visualizer.exe
 
 Note - Whenever you add new .cpp file, must add it to CMakeLists.txt under src/main.cpp and delete old build folder:
