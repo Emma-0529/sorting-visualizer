@@ -3,6 +3,7 @@
 
 #include <cstddef>
 #include <vector>
+#include "visualizer.h"
 
 // Statistics are reset at the start of every sorting function.
 // A movement means one write of an array element (including temporary arrays).
@@ -13,8 +14,8 @@ struct SortStats {
 };
 
 // Sorts the vector in ascending order, modifying it in place.
-void bubbleSort(std::vector<int>& data, SortStats& stats);
-void mergeSort(std::vector<int>& data, SortStats& stats);
-void quickSort(std::vector<int>& data, SortStats& stats);
+void bubbleSort(SortState& state, SortStats& stats);
+void mergeSort(SortState& state, SortStats& stats);
+void quickSort(SortState& state, SortStats& stats);
 
 #endif

@@ -20,6 +20,8 @@ FetchContent_MakeAvailable(raylib)
 add_executable(sorting_visualizer 
     src/main.cpp
     src/SortingAlgorithms.cpp
+    src/data.cpp
+    src/visualizer.cpp
 )
 
 target_include_directories(sorting_visualizer PRIVATE include)
