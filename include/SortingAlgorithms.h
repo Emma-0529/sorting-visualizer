@@ -1,0 +1,20 @@
+#ifndef SORTING_ALGORITHMS_H
+#define SORTING_ALGORITHMS_H
+
+#include <cstddef>
+#include <vector>
+
+// Statistics are reset at the start of every sorting function.
+// A movement means one write of an array element (including temporary arrays).
+struct SortStats {
+    unsigned long long comparisons = 0;
+    unsigned long long swaps = 0;
+    unsigned long long movements = 0;
+};
+
+// Sorts the vector in ascending order, modifying it in place.
+void bubbleSort(std::vector<int>& data, SortStats& stats);
+void mergeSort(std::vector<int>& data, SortStats& stats);
+void quickSort(std::vector<int>& data, SortStats& stats);
+
+#endif
