@@ -4,6 +4,7 @@
 #include <utility>
 #include <string>
 #include <random>
+#include <vector>
 
 using namespace std;
 
@@ -25,7 +26,7 @@ string getAlgorithmName(AlgorithmType algo) {
 }
 
 // resets array with new dataset type, number of elements, and clears states
-void resetDataset(SortState& state, DatasetType type) {
+void resetDataset(SortState& state, DatasetType type, vector<int>& baselineArray) {
     // random number generator for the dataset size
     random_device rd;
     mt19937 gen(rd());
@@ -35,7 +36,8 @@ void resetDataset(SortState& state, DatasetType type) {
     int dynamicSize = sizeDist(gen);
 
     state.currentDataset = type;
-    state.array = generateDataset(type, dynamicSize, 15, 500);
+    baselineArray = generateDataset(type, dynamicSize, 15, 500);
+    state.array = baselineArray;
     state.isSorted = false;
     state.skipAnimation = false;
     state.activeIndex1 = -1;
@@ -52,24 +54,31 @@ int main() {
 
     SortState state;
     SortStats stats;
+    vector<int> baselineArray;
     AlgorithmType currentAlgo = AlgorithmType::BUBBLE;
-    resetDataset(state, DatasetType::RANDOM);
+    resetDataset(state, DatasetType::RANDOM, baselineArray);
 
     while (!WindowShouldClose()) {
         if (!state.isSorting) {
             // 1. select dataset type (random, already-sorted, nearly-sorted, or reversed)
-            if (IsKeyPressed(KEY_ONE))   resetDataset(state, DatasetType::RANDOM);
-            if (IsKeyPressed(KEY_TWO))   resetDataset(state, DatasetType::ALREADY_SORTED);
-            if (IsKeyPressed(KEY_THREE)) resetDataset(state, DatasetType::NEARLY_SORTED);
-            if (IsKeyPressed(KEY_FOUR))  resetDataset(state, DatasetType::REVERSED);
+            if (IsKeyPressed(KEY_ONE))   resetDataset(state, DatasetType::RANDOM, baselineArray);
+            if (IsKeyPressed(KEY_TWO))   resetDataset(state, DatasetType::ALREADY_SORTED, baselineArray);
+            if (IsKeyPressed(KEY_THREE)) resetDataset(state, DatasetType::NEARLY_SORTED, baselineArray);
+            if (IsKeyPressed(KEY_FOUR))  resetDataset(state, DatasetType::REVERSED, baselineArray);
 
             // 2. select algorithm (bubble, merge, or quick sort)
             if (IsKeyPressed(KEY_B)) currentAlgo = AlgorithmType::BUBBLE;
             if (IsKeyPressed(KEY_M)) currentAlgo = AlgorithmType::MERGE;
             if (IsKeyPressed(KEY_Q)) currentAlgo = AlgorithmType::QUICK;
 
-            // 3. reset sort or change speed
-            if (IsKeyPressed(KEY_R))     resetDataset(state, state.currentDataset);
+            // 3. reset back to unsorted data with same elements or change speed
+            if (IsKeyPressed(KEY_R)) {
+                state.array = baselineArray;
+                state.isSorted = false;
+                state.skipAnimation = false;
+                state.activeIndex1 = -1;
+                state.activeIndex2 = -1;
+            }
             if (IsKeyPressed(KEY_F))     state.fastMode = !state.fastMode;
 
             // 4. start the sort using spacebar
