@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "visualizer.h"
 #include "SortingAlgorithms.h"
+#include "Performance.h"
 #include <utility>
 #include <string>
 #include <random>
@@ -55,8 +56,11 @@ int main() {
     SortState state;
     SortStats stats;
     vector<int> baselineArray;
+    BenchmarkReport benchmarkReport;
+    bool showBenchmarks = false;
     AlgorithmType currentAlgo = AlgorithmType::BUBBLE;
     resetDataset(state, DatasetType::RANDOM, baselineArray);
+    
 
     while (!WindowShouldClose()) {
         if (!state.isSorting) {
@@ -81,7 +85,14 @@ int main() {
             }
             if (IsKeyPressed(KEY_F))     state.fastMode = !state.fastMode;
 
-            // 4. start the sort using spacebar
+            // 4.Run performance comparison
+            if (IsKeyPressed(KEY_P)) {
+                benchmarkReport = benchmarkAllAlgorithms(baselineArray);
+                showBenchmarks = true;
+            }
+
+
+            // 5. start the sort using spacebar
             if (IsKeyPressed(KEY_SPACE) && !state.isSorted) {
                 if (currentAlgo == AlgorithmType::BUBBLE) {
                     bubbleSort(state, stats);
@@ -113,6 +124,41 @@ int main() {
 
         // draws sorting bars across the width of the screen
         drawBars(state, screenWidth, screenHeight);
+
+        
+if (showBenchmarks) {
+    DrawRectangle(45, 100, 910, 390, LIGHTGRAY);
+
+    DrawText("ALGORITHM PERFORMANCE COMPARISON",
+             70, 120, 22, DARKBLUE);
+
+    DrawText("Algorithm | Time (ms) | Comparisons | Swaps | Movements | Correct",
+             70, 165, 15, BLACK);
+
+    int y = 205;
+
+    for (const auto& result : benchmarkReport.results) {
+        string line =
+            result.algorithmName +
+            " | " + to_string(result.executionTimeMs) +
+            " | " + to_string(result.comparisons) +
+            " | " + to_string(result.swaps) +
+            " | " + to_string(result.movements) +
+            " | " + (result.correctlySorted ? "YES" : "NO");
+
+        DrawText(line.c_str(), 70, y, 15, BLACK);
+        y += 45;
+    }
+
+    string winner =
+        "Fastest correctly sorted algorithm: " +
+        benchmarkReport.fastestAlgorithm;
+
+    DrawText(winner.c_str(), 70, 365, 19, DARKGREEN);
+    DrawText("Press P to compare again", 70, 420, 15, DARKGRAY);
+}
+
+        
         EndDrawing();
     }
 

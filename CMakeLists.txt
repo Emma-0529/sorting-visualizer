@@ -22,6 +22,7 @@ add_executable(sorting_visualizer
     src/SortingAlgorithms.cpp
     src/data.cpp
     src/visualizer.cpp
+    src/Performance.cpp
 )
 
 target_include_directories(sorting_visualizer PRIVATE include)
